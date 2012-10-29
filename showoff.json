@@ -1,8 +1,8 @@
 {
   "name": "Practical Git",
   "sections": [
-    {"section": "title"},
     {"section": "about"},
-    {"section": "recommended"}
+    {"section": "recommended"},
+    {"section": "structure"}
   ]
 }

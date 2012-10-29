@@ -1,4 +1,4 @@
-!SLIDE
+!SLIDE subsection
 
 # Recommended Reading #
 

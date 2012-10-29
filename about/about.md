@@ -1,3 +1,7 @@
+!SLIDE subsection
+
+# Practical Git #
+
 !SLIDE
 
 # Who's this guy? #
@@ -20,3 +24,8 @@
 # Who are you people? #
 
 .notes Raise your hand. Down if you use git every day / week / never?
+
+!SLIDE
+
+# Ask Questions #
+
