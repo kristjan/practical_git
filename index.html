@@ -31,6 +31,8 @@
   <link type="text/css" href="./css/sh_style.css" rel="stylesheet" >
 
   
+    <link rel="stylesheet" href="file/style.css" type="text/css"/>
+  
 
   
 
@@ -75,13 +77,13 @@
 </div>
 
 <div id="slides" class="offscreen" style="display:none;">
-<div class="slide" data-transition="none"><div class="content" ref="title/title">
+<div class="slide" data-transition="none"><div class="content subsection" ref="about/about/1">
 <h1>Practical Git</h1>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="about/about/1">
+</div><div class="slide" data-transition="none"><div class="content" ref="about/about/2">
 <h1>Who's this guy?</h1>
 </div>
-</div><div class="slide" data-transition="none"><div class="content bullets incremental" ref="about/about/2">
+</div><div class="slide" data-transition="none"><div class="content bullets incremental" ref="about/about/3">
 <h1>Kristj&#xE1;n P&#xE9;tursson</h1>
 
 <ul>
@@ -92,15 +94,20 @@
 </ul>
 
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="about/about/3">
+</div><div class="slide" data-transition="none"><div class="content" ref="about/about/4">
 <h1>github.com/<strong>kristjan</strong></h1>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="about/about/4">
+</div><div class="slide" data-transition="none"><div class="content" ref="about/about/5">
 <h1>Who are you people?</h1>
 
 <p class="notes">Raise your hand. Down if you use git every day / week / never?</p>
 </div>
-</div><div class="slide" data-transition="none"><div class="content" ref="recommended/recommended/1">
+</div><div class="slide" data-transition="none"><div class="content" ref="about/about/6">
+<h1>Ask Questions</h1>
+
+<p>Also, what do you want to know?</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="recommended/recommended/1">
 <h1>Recommended Reading</h1>
 </div>
 </div><div class="slide" data-transition="none"><div class="content bullets incremental" ref="recommended/recommended/2">
@@ -138,6 +145,342 @@
 <h2>When it's hard, cheat</h2>
 
 <p>cheat.errtheblog.com/s/git</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="terminology/terminology/1">
+<h1>Terminology</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="terminology/terminology/2">
+<h1>Working Tree</h1>
+
+<p>What your files look like <strong>now</strong>, while you're coding.</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="terminology/terminology/3">
+<h1>Staging Area</h1>
+
+<h2>a.k.a. Index</h2>
+
+<p>A holding tank where you can prepare a commit.</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="terminology/terminology/4">
+<h1>Repository</h1>
+
+<p class="notes">Once something is in the repository, it's very hard to lose.
+Demo: Create a new file; commit "A" to it; stage "B"; edit it to "C".</p>
+
+<p>All the snapshots Git has of your project.</p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content subsection" ref="structure/0_structure/1">
+<h1>Structure</h1>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="structure/0_structure/2">
+<h1>Git is a tree</h1>
+
+<p class="notes">Actually a collection of <code>tree</code>s with a lot of metadata; not going to go
+into that</p>
+
+<pre><code><code class="command">$ git log --all --graph --pretty=format:'%s'</code>
+<code class="result">  * Leaf
+  * Branch
+  | * Leaf
+  | * Branch
+  | * Branch
+  | | * Leaf
+  | |/
+  |/|
+  * | Branch
+  |/
+  * Trunk
+  | * Leaf
+  | * Branch
+  | * Branch
+  |/
+  * Trunk
+  * Dirt
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content small" ref="structure/0_structure/3">
+<p class="notes">Contains Tree, author/committer, timestamp, message</p>
+
+<h1>Your tree is made of Commits</h1>
+
+<pre class="sh_diff"><code>commit f1e97a5d20564f66ad6d27befa5573f7760f85f8
+Author: Kristj&#xE1;n P&#xE9;tursson &lt;kristjan@gmail.com&gt;
+Date:   Mon Oct 29 02:37:24 2012 -0700
+
+    Recommended Reading section
+
+diff --git a/recommended/recommended.md
+           b/recommended/recommended.md
+new file mode 100644
+index 0000000..3b5433a
+--- /dev/null
++++ b/presentation/recommended/recommended.md
+@@ -0,0 +1,39 @@
++!SLIDE
++
++# Recommended Reading #
++
+                       ...</code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="structure/0_structure/4">
+<p class="notes">Demonstrate the commit lifecycle: Unstaged -&gt; Staged -&gt; Committed</p>
+
+<h1>Committing</h1>
+
+<pre><code><code class="command">$ touch foo</code>
+<code class="command">$ git add foo</code>
+<code class="command">$ git status</code>
+<code class="result">  # On branch master
+  #
+  # Initial commit
+  #
+  # Changes to be committed:
+  #   (use "git rm --cached &lt;file&gt;..." to unstage)
+  #
+  # new file:   foo
+
+</code><code class="command">$ git commit</code>
+<code class="result">  ".git/COMMIT_EDITMSG" 12L, 288C written
+  [master 6e62099] Committing Foo
+   0 files changed
+   create mode 100644 foo
+
+</code><code class="command">$ git status</code>
+<code class="result">  # On branch master
+  nothing to commit (working directory clean)
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/0_structure/5">
+<h1>Committing</h1>
+
+<p><img src="./file/structure/commit-lifecycle.png" width="500" height="317" alt="Commit Lifecycle"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline small" ref="structure/0_structure/6">
+<h1>Where does this stuff go?</h1>
+
+<pre><code><code class="command">$ tree -L 2 .git</code>
+<code class="result">  .git
+  &#x251C;&#x2500;&#x2500; COMMIT_EDITMSG
+  &#x251C;&#x2500;&#x2500; HEAD
+  &#x251C;&#x2500;&#x2500; ORIG_HEAD
+  &#x251C;&#x2500;&#x2500; config
+  &#x251C;&#x2500;&#x2500; description
+  &#x251C;&#x2500;&#x2500; hooks
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; ...
+  &#x251C;&#x2500;&#x2500; index
+  &#x251C;&#x2500;&#x2500; info
+  &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; exclude
+  &#x251C;&#x2500;&#x2500; logs
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; HEAD
+  &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; refs
+  &#x251C;&#x2500;&#x2500; objects
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; 02
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; 03
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; ...
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; info
+  &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; pack
+  &#x251C;&#x2500;&#x2500; refs
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; heads
+  &#x2502;&#xA0;&#xA0; &#x251C;&#x2500;&#x2500; remotes
+  &#x2502;&#xA0;&#xA0; &#x2514;&#x2500;&#x2500; tags
+  &#x2514;&#x2500;&#x2500; rr-cache
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/1_head/head/1">
+<h1><code>HEAD</code></h1>
+
+<p>Points to where you are in the tree</p>
+
+<p><img src="./file/structure/1_head/head.png" width="445" height="225" alt="Head"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/1_head/head/2">
+<p class="notes">HEAD is more interesting when there's more than one branch</p>
+
+<h1><code>HEAD</code></h1>
+
+<p>Points to where you are in the tree</p>
+
+<p><img src="./file/structure/1_head/head-2-branches.png" width="445" height="310" alt="Head"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/1_head/head/3">
+<h1><code>HEAD</code></h1>
+
+<p><code>git checkout testing</code></p>
+
+<p><img src="./file/structure/1_head/head-switched-branch.png" width="392" height="310" alt="Head"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/1_head/head/4">
+<h1><code>HEAD</code></h1>
+
+<p><code>git commit ...</code></p>
+
+<p><img src="./file/structure/1_head/head-new-commit.png" width="500" height="287" alt="Commit"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="structure/1_head/head/5">
+<h2>Lives in <code>.git/HEAD</code></h2>
+
+<pre><code><code class="command">$ cat .git/HEAD</code>
+<code class="result">  ref: refs/heads/master
+
+</code><code class="command">$ cat .git/refs/heads/master</code>
+<code class="result">  4f6a62b56396617d0894d7049e1da3dd59e4aa1c
+
+</code><code class="command">$ git log -1</code>
+<code class="result">  commit 4f6a62b56396617d0894d7049e1da3dd59e4aa1c
+  Author: Kristj&#xE1;n P&#xE9;tursson &lt;kristjan@gmail.com&gt;
+  Date:   Mon Oct 29 03:01:19 2012 -0700
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/1_head/head/6">
+<p>Don't screw with <code>.git/head</code></p>
+
+<p><img src="./file/structure/1_head/dont-screw-with-my-head.jpg" width="460" height="300" alt="Head Asplode"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content" ref="structure/2_checkout/2_checkout/1">
+<h1><code>git checkout</code> moves <code>HEAD</code></h1>
+
+<h2><code>git checkout testing</code></h2>
+
+<p><img src="./file/structure/2_checkout/head-switched-branch.png" width="392" height="310" alt="Head"/></p>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="structure/2_checkout/2_checkout/2">
+<p class="notes">.
+<code>git checkout foo</code> has the implicit argument <code>HEAD</code>
+<code>git checkout</code> actually updates files in your working tree to match the version
+in the tree you specify. If you give no paths (ie, update everything), you're in
+a state indistinguishable from that tree.
+This is one of the few things that can destroy data</p>
+
+<h2><code>git checkout</code> <strong>sometimes</strong> moves <code>HEAD</code></h2>
+
+<pre><code><code class="command">$ git status</code>
+<code class="result">  # On branch master
+  # Changes not staged for commit:
+  #   (use "git add &lt;file&gt;..." to update what will be committed)
+  #   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+  #
+  # modified:   foo
+  #
+  no changes added to commit (use "git add" and/or "git commit -a")
+
+</code><code class="command">$ git checkout foo</code>
+<code class="result">
+</code><code class="command">$ git status</code>
+<code class="result">    On branch master
+  nothing to commit (working directory clean)
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental small" ref="structure/3_reset/1">
+<h1><code>git reset</code> moves <code>HEAD</code></h1>
+
+<pre><code><code class="command">$ git log --oneline</code>
+<code class="result">  53524cf Change foo's content  # "Bar"
+  101ba32 Give Foo content      # "Foo"
+  6e62099 Committing Foo        # Empty
+
+</code><code class="command">$ git reset 101ba32</code>
+<code class="result">  Unstaged changes after reset:
+  M foo                         # "Bar"
+
+</code><code class="command">$ git log --oneline</code>
+<code class="result">  101ba32 Give Foo content      # "Foo"
+  6e62099 Committing Foo        # Empty
+
+</code><code class="command">$ git diff</code>
+<code class="result">  diff --git a/foo b/foo
+  index bc56c4d..ebd7525 100644
+  --- a/foo
+  +++ b/foo
+  @@ -1 +1 @@
+  -Foo
+  +Bar
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental" ref="structure/3_reset/2">
+<h1><code>git reset</code> is dangerous</h1>
+
+<pre><code><code class="command">$ git reset --hard 101ba32</code>
+<code class="result">  HEAD is now at 101ba32 Give Foo content
+
+</code><code class="command">$ git log --oneline</code>
+<code class="result">  101ba32 Give Foo content      # "Foo"
+  6e62099 Committing Foo        # Empty
+
+</code><code class="command">$ git status</code>
+<code class="result">  # On branch master
+  nothing to commit (working directory clean)
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental small" ref="structure/3_reset/3">
+<h1><code>git reset</code> <strong>sometimes</strong> moves <code>HEAD</code></h1>
+
+<pre><code><code class="command">$ git log --oneline</code>
+<code class="result">  53524cf Change foo's content  # "Bar"
+  101ba32 Give Foo content      # "Foo"
+  6e62099 Committing Foo        # Empty
+
+</code><code class="command">$ cat foo</code>
+<code class="result">  Bar
+
+</code><code class="command">$ git reset 101ba32 foo</code>
+<code class="result">  Unstaged changes after reset:
+  M foo                         # "Bar"
+
+</code><code class="command">$ git log --oneline</code>
+<code class="result">  53524cf Change foo's content  # "Bar"
+  101ba32 Give Foo content      # "Foo"
+  6e62099 Committing Foo        # Empty
+
+</code><code class="command">$ cat foo</code>
+<code class="result">  Bar
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline incremental small" ref="structure/3_reset/4">
+<h1><code>git reset</code> can also change the Index</h1>
+
+<pre><code><code class="command">$ git status</code>
+<code class="result">  # On branch master
+  # Changes to be committed:
+  #
+  # modified:   foo
+  #
+  # Changes not staged for commit:
+  #
+  # modified:   foo
+
+</code><code class="command">$ git diff --cached</code>
+<code class="result">  diff --git a/foo b/foo
+  index ebd7525..bc56c4d 100644
+  --- a/foo
+  +++ b/foo
+  @@ -1 +1 @@
+  -Bar
+  +Foo
+
+</code><code class="command">$ git diff</code>
+<code class="result">  diff --git a/foo b/foo
+  index bc56c4d..ebd7525 100644
+  --- a/foo
+  +++ b/foo
+  @@ -1 +1 @@
+  -Foo
+  +Bar
+</code></code></pre>
+</div>
+</div><div class="slide" data-transition="none"><div class="content commandline" ref="structure/4_reflog">
+<h1><code>reflog</code> to the refcue</h1>
+
+<pre><code><code class="command">$ git reflog</code>
+<code class="result">53524cf HEAD@{0}: reset: moving to 53524cf
+101ba32 HEAD@{1}: reset: moving to 101ba32
+53524cf HEAD@{2}: reset: moving to 53524cf
+101ba32 HEAD@{3}: reset: moving to 101ba32
+53524cf HEAD@{4}: reset: moving to ORIG_HEAD
+6e62099 HEAD@{5}: reset: moving to 6e62099
+53524cf HEAD@{6}: commit: Change foo's content
+101ba32 HEAD@{7}: commit: Give Foo content
+6e62099 HEAD@{8}: commit (initial): Committing Foo
+</code></code></pre>
 </div>
 </div></div>
 
